@@ -32,6 +32,7 @@ class CustomerDetailActivity : AppCompatActivity() {
     @Inject
     lateinit var customerRepository: CustomerRepository
 
+    @Inject
     lateinit var colorsRepository: ColorsRepository
 
     private val params by lazy {

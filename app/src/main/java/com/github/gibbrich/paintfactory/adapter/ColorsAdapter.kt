@@ -24,11 +24,6 @@ class ColorsAdapter(
         holder.titleLabel.text = "#${item.value.toString(16).capitalize()}"
     }
 
-    fun add(color: Color) {
-        items.add(color)
-        notifyItemInserted(items.lastIndex)
-    }
-
     class Holder(
         val colorPreview: View,
         val titleLabel: TextView,

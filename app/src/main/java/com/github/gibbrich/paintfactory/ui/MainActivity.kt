@@ -6,12 +6,18 @@ import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
+import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.domain.Color
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.adapter.ColorsAdapter
+import com.github.gibbrich.paintfactory.data.ColorsRepository
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var colorsRepository: ColorsRepository
 
     lateinit var adapter: ColorsAdapter
 
@@ -19,11 +25,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        choose_color_button.setOnClickListener {
+        (application as PaintShopApp).appComponent.inject(this)
+
+        activity_main_choose_color_button.setOnClickListener {
             showColorPicker()
         }
 
-        adapter = ColorsAdapter()
+        activity_main_setup_customers.setOnClickListener {
+            val intent = CustomersActivity.getIntent(this)
+            startActivity(intent)
+        }
+
+        adapter = ColorsAdapter(colorsRepository.colors)
         activity_main_colors_list.layoutManager = LinearLayoutManager(this)
         activity_main_colors_list.adapter = adapter
     }
@@ -44,6 +57,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onColorPicked(selectedColor: Int) {
-        adapter.add(Color(selectedColor))
+        val color = Color(selectedColor)
+        colorsRepository.colors.add(color)
+        adapter.notifyItemInserted(colorsRepository.colors.lastIndex)
     }
 }

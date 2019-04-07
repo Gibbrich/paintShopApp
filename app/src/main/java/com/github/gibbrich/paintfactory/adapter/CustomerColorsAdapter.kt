@@ -31,6 +31,7 @@ class CustomerColorsAdapter(
                 customerColors.put(item, colorType)
             } else {
                 customerColors.remove(item)
+                holder.matteCheckBox.isChecked = false
             }
         }
 
@@ -39,9 +40,15 @@ class CustomerColorsAdapter(
         holder.matteCheckBox.isChecked = customerColors.get(item)?.let { it == ColorType.MATTE } ?: false
         holder.matteCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                if (customerColors.contains(item)) {
-                    customerColors.put(item, ColorType.MATTE)
+                customerColors.put(item, ColorType.MATTE)
+                holder.wishlistCheckBox.isChecked = true
+
+                for (customerColor in customerColors) {
+                    if (customerColor.key != item) {
+                        customerColors[customerColor.key] = ColorType.GLOSSY
+                    }
                 }
+                notifyDataSetChanged()
             } else {
                 if (customerColors.contains(item)) {
                     customerColors.put(item, ColorType.GLOSSY)
