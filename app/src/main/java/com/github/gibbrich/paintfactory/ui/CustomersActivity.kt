@@ -35,13 +35,18 @@ class CustomersActivity : AppCompatActivity() {
         activity_customers_list.layoutManager = LinearLayoutManager(this)
         activity_customers_list.adapter = adapter
 
-        activity_customers_add_button.setOnClickListener {
+        activity_customers_add_customer_button.setOnClickListener {
             val customer = Customer()
             customerRepository.customers.add(customer)
             adapter.notifyItemInserted(customerRepository.customers.lastIndex)
             val params = CustomerDetailParams(customerRepository.customers.lastIndex)
             val intent = CustomerDetailActivity.getIntent(this, params)
             startActivityForResult(intent, CustomerDetailActivity.CREATE_CUSTOMER_CODE)
+        }
+
+        activity_customers_pick_colors_button.setOnClickListener {
+            val intent = ColorsCalculationActivity.getIntent(this)
+            startActivity(intent)
         }
     }
 

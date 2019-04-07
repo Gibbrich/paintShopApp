@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.customer_item_layout.view.*
 
 class CustomersAdapter(
     private val onItemClicked: (Int) -> Unit,
-    items: MutableList<Customer> = mutableListOf()
+    items: MutableList<Customer>
 ): ConstantValueAdapter<Customer, CustomersAdapter.Holder>(items) {
     override fun createHolder(view: View): Holder = Holder(
         customerTitleLabel = view.customer_item_title_label,
