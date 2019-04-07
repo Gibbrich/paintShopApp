@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PaintFactory</string>
+    <string name="color_item_matte">Matte</string>
+</resources>
