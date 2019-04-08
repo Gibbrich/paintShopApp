@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">PaintFactory</string>
     <string name="color_item_matte">Matte</string>
+    <string name="activity_main_title">Paint Factory</string>
     <string name="activity_main_add_color">Add color</string>
     <string name="activity_main_setup_customers">Setup customers</string>
+    <string name="activity_main_empty_label">Add colors to start</string>
 
+    <string name="activity_customers_empty_label">Add customers to continue</string>
+    <string name="activity_customers_label">Customers</string>
     <string name="activity_customers_add_customer">Add customer</string>
     <string name="activity_customers_pick_colors">Pick colors</string>
 
+    <string name="activity_customer_detail_label">Customer colors</string>
+
+    <string name="activity_colors_calculation_label">Colors result</string>
     <string name="activity_colors_calculation_cant_satisfy_customers">There is no way to satisfy all customers with given conditions.\nPlease, change them and try again.</string>
 </resources>

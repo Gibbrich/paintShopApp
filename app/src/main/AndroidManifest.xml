@@ -10,13 +10,15 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ui.ColorsCalculationActivity">
-        </activity>
-        <activity android:name=".ui.CustomerDetailActivity">
-        </activity>
-        <activity android:name=".ui.CustomersActivity">
-        </activity>
-        <activity android:name=".ui.MainActivity">
+        <activity
+                android:name=".ui.ColorsCalculationActivity"
+                android:label="@string/activity_colors_calculation_label" />
+        <activity android:name=".ui.CustomerDetailActivity"
+                android:label="@string/activity_customer_detail_label" />
+        <activity android:name=".ui.CustomersActivity"
+                android:label="@string/activity_customers_label"/>
+        <activity android:name=".ui.MainActivity"
+                android:label="@string/activity_main_title" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
@@ -45,6 +46,15 @@ class MainActivity : AppCompatActivity() {
         activity_main_colors_list.adapter = adapter
 
         enableSwipeToDelete()
+
+        // todo - move to onAddItemHandler
+//        if (adapter.itemCount == 0) {
+//            activity_main_colors_list.visibility = View.GONE
+//            activity_main_empty_label.visibility = View.VISIBLE
+//        } else {
+//            activity_main_colors_list.visibility = View.VISIBLE
+//            activity_main_empty_label.visibility = View.GONE
+//        }
     }
 
     private fun showColorPicker() {

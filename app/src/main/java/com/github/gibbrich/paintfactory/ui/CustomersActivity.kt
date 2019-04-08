@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.View
 import com.github.gibbrich.paintfactory.domain.Customer
 import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.R
@@ -52,6 +53,15 @@ class CustomersActivity : AppCompatActivity() {
             val intent = ColorsCalculationActivity.getIntent(this)
             startActivity(intent)
         }
+
+        // todo - move to onAddItemHandler
+//        if (adapter.itemCount == 0) {
+//            activity_customers_empty_label.visibility = View.VISIBLE
+//            activity_customers_list.visibility = View.GONE
+//        } else {
+//            activity_customers_empty_label.visibility = View.GONE
+//            activity_customers_list.visibility = View.VISIBLE
+//        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
