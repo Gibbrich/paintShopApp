@@ -52,6 +52,13 @@ class CustomersActivity : AppCompatActivity() {
             val intent = ColorsCalculationActivity.getIntent(this)
             startActivity(intent)
         }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     private fun onCustomerClicked(customerId: Int) {

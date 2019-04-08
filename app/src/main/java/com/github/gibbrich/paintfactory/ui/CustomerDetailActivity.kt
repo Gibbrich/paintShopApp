@@ -50,5 +50,12 @@ class CustomerDetailActivity : AppCompatActivity() {
 
         activity_customer_detail_colors.layoutManager = LinearLayoutManager(this)
         activity_customer_detail_colors.adapter = adapter
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }

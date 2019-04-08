@@ -47,7 +47,7 @@ class ColorsCalculationActivity : AppCompatActivity() {
                 if (entry.value == ColorType.MATTE) {
                     matteId = id
                 } else {
-
+                    glossyWishList.add(id)
                 }
             }
             Customer(matteId, glossyWishList)
@@ -68,6 +68,8 @@ class ColorsCalculationActivity : AppCompatActivity() {
             }.toMutableList()
         } ?: mutableListOf()
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         adapter = ColorsWithTypeAdapter(list)
         activity_colors_calculations_list.layoutManager = LinearLayoutManager(this)
         activity_colors_calculations_list.adapter = adapter
@@ -79,5 +81,10 @@ class ColorsCalculationActivity : AppCompatActivity() {
             cant_satisfy_customers_label.visibility = View.GONE
             activity_colors_calculations_list.visibility = View.VISIBLE
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }
