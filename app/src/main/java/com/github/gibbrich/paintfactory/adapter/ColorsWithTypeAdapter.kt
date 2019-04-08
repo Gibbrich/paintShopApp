@@ -10,7 +10,7 @@ import com.github.gibbrich.paintfactory.domain.ColorWithType
 import kotlinx.android.synthetic.main.color_with_types_item_layout.view.*
 
 class ColorsWithTypeAdapter(
-    colors: MutableList<ColorWithType> = mutableListOf()
+    colors: MutableList<ColorWithType>
 ): ConstantValueAdapter<ColorWithType, ColorsWithTypeAdapter.Holder>(colors) {
     override fun createHolder(view: View): Holder = Holder(
         colorPreview = view.color_with_types_color_preview_image,

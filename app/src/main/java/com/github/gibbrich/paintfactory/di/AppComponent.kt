@@ -1,5 +1,6 @@
 package com.github.gibbrich.paintfactory.di
 
+import com.github.gibbrich.paintfactory.ui.ColorsCalculationActivity
 import com.github.gibbrich.paintfactory.ui.CustomerDetailActivity
 import com.github.gibbrich.paintfactory.ui.CustomersActivity
 import com.github.gibbrich.paintfactory.ui.MainActivity
@@ -14,4 +15,5 @@ interface AppComponent {
     fun inject(entry: CustomersActivity)
     fun inject(entry: CustomerDetailActivity)
     fun inject(entry: MainActivity)
+    fun inject(entry: ColorsCalculationActivity)
 }
