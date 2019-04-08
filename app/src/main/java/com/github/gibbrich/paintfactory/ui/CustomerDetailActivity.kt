@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.R
-import com.github.gibbrich.paintfactory.adapter.ColorsAdapter
 import com.github.gibbrich.paintfactory.adapter.CustomerColorsAdapter
 import com.github.gibbrich.paintfactory.data.ColorsRepository
 import com.github.gibbrich.paintfactory.data.CustomerRepository

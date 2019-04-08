@@ -30,6 +30,11 @@ abstract class ConstantValueAdapter<T, VH : RecyclerView.ViewHolder>(
         notifyItemInserted(items.lastIndex)
     }
 
+    fun remove(itemId: Int) {
+        items.removeAt(itemId)
+        notifyItemRemoved(itemId)
+    }
+
     fun replaceData(data: List<T>) {
         items.clear()
         items.addAll(data)

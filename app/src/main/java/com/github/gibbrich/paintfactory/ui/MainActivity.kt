@@ -3,6 +3,9 @@ package com.github.gibbrich.paintfactory.ui
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
@@ -10,6 +13,7 @@ import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.domain.Color
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.adapter.ColorsAdapter
+import com.github.gibbrich.paintfactory.adapter.SwipeToDeleteCallback
 import com.github.gibbrich.paintfactory.data.ColorsRepository
 import javax.inject.Inject
 
@@ -39,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         adapter = ColorsAdapter(colorsRepository.colors)
         activity_main_colors_list.layoutManager = LinearLayoutManager(this)
         activity_main_colors_list.adapter = adapter
+
+        enableSwipeToDelete()
     }
 
     private fun showColorPicker() {
@@ -60,5 +66,16 @@ class MainActivity : AppCompatActivity() {
         val color = Color(selectedColor)
         colorsRepository.colors.add(color)
         adapter.notifyItemInserted(colorsRepository.colors.lastIndex)
+    }
+
+    private fun enableSwipeToDelete() {
+        val swipeToDeleteCallback = object : SwipeToDeleteCallback(this) {
+            override fun onSwiped(holder: RecyclerView.ViewHolder, position: Int) {
+                adapter.remove(holder.adapterPosition)
+            }
+        }
+
+        val touchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        touchHelper.attachToRecyclerView(activity_main_colors_list)
     }
 }
