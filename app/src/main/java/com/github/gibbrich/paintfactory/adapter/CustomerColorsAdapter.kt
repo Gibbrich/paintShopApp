@@ -11,7 +11,9 @@ import kotlinx.android.synthetic.main.customer_color_item_layout.view.*
 
 class CustomerColorsAdapter(
     items: MutableList<Color>,
-    private val customerColors: MutableMap<Color, ColorType>
+    private val customerWishlist: MutableMap<Color, ColorType>,
+    private val onAddToWishListCkeckboxClicked: (isChecked: Boolean, item: Color, isMatteChecked: Boolean) -> Unit,
+    private val onIsMatteCheckboxClicked: (isChecked: Boolean, item: Color) -> Unit
 ): ConstantValueAdapter<Color, CustomerColorsAdapter.Holder>(items) {
     override fun createHolder(view: View): Holder = Holder(
         wishlistCheckBox = view.is_in_wishlist_check_box,
@@ -24,35 +26,24 @@ class CustomerColorsAdapter(
     override val lineResourceId = R.layout.customer_color_item_layout
 
     override fun bind(holder: Holder, item: Color, position: Int) {
-        holder.wishlistCheckBox.isChecked = customerColors.contains(item)
+        holder.wishlistCheckBox.isChecked = item in customerWishlist
         holder.wishlistCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                val colorType = if (holder.matteCheckBox.isChecked) ColorType.MATTE else ColorType.GLOSSY
-                customerColors.put(item, colorType)
-            } else {
-                customerColors.remove(item)
+            if (isChecked.not()) {
                 holder.matteCheckBox.isChecked = false
             }
+            onAddToWishListCkeckboxClicked.invoke(isChecked, item, holder.matteCheckBox.isChecked)
         }
 
         holder.colorPreview.setBackgroundColor(item.value)
         holder.titleLabel.text = "#${item.value.toString(16).capitalize()}"
-        holder.matteCheckBox.isChecked = customerColors.get(item)?.let { it == ColorType.MATTE } ?: false
+        holder.matteCheckBox.isChecked = customerWishlist.get(item)?.let { it == ColorType.MATTE } ?: false
         holder.matteCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                customerColors.put(item, ColorType.MATTE)
                 holder.wishlistCheckBox.isChecked = true
-
-                for (customerColor in customerColors) {
-                    if (customerColor.key != item) {
-                        customerColors[customerColor.key] = ColorType.GLOSSY
-                    }
-                }
+                onIsMatteCheckboxClicked.invoke(isChecked, item)
                 notifyDataSetChanged()
             } else {
-                if (customerColors.contains(item)) {
-                    customerColors.put(item, ColorType.GLOSSY)
-                }
+                onIsMatteCheckboxClicked.invoke(isChecked, item)
             }
         }
     }
