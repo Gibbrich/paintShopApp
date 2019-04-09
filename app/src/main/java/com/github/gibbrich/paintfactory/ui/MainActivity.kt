@@ -39,7 +39,9 @@ class MainActivity : AppCompatActivity() {
             model.onSetupCustomersButtonClicked()
         }
 
-        model.actions.observe(this, Observer { it?.let(this::handleAction) })
+        model.actions.observe(this, Observer {
+            it?.let(this::handleAction) }
+        )
 
         setUpColorsRecyclerView()
     }
