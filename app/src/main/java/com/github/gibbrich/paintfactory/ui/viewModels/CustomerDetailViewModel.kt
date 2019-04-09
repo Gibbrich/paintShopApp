@@ -3,13 +3,15 @@ package com.github.gibbrich.paintfactory.ui.viewModels
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import com.github.gibbrich.paintfactory.PaintShopApp
-import com.github.gibbrich.paintfactory.data.ColorsRepository
-import com.github.gibbrich.paintfactory.data.CustomerRepository
-import com.github.gibbrich.paintfactory.domain.Color
-import com.github.gibbrich.paintfactory.domain.ColorType
+import com.github.gibbrich.paintfactory.data.ColorsDataRepository
+import com.github.gibbrich.paintfactory.data.CustomerDataRepository
+import com.github.gibbrich.paintfactory.domain.models.Color
+import com.github.gibbrich.paintfactory.domain.models.ColorType
 import javax.inject.Inject
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import com.github.gibbrich.paintfactory.domain.repository.ColorsRepository
+import com.github.gibbrich.paintfactory.domain.repository.CustomerRespoitory
 
 class CustomerDetailViewModel(
     private val customerId: Int,
@@ -17,7 +19,7 @@ class CustomerDetailViewModel(
 ) : AndroidViewModel(app) {
 
     @Inject
-    lateinit var customerRepository: CustomerRepository
+    lateinit var customerRepository: CustomerRespoitory
 
     @Inject
     lateinit var colorsRepository: ColorsRepository
@@ -26,16 +28,16 @@ class CustomerDetailViewModel(
         getApplication<PaintShopApp>().appComponent.inject(this)
     }
 
-    fun getCustomerWishlist() = customerRepository.customers[customerId].wishList
+    fun getCustomerWishlist(): Map<Color, ColorType> = customerRepository.getCustomerWishList(customerId)
 
-    fun getColors() = colorsRepository.colors
+    fun getColors() = colorsRepository.getColors()
 
     fun onAddToWishListCkeckboxClicked(
         isChecked: Boolean,
         item: Color,
         isMatteChecked: Boolean
     ) {
-        val wishList = getCustomerWishlist()
+        val wishList = customerRepository.getCustomerWishList(customerId)
         if (isChecked) {
             val colorType = if (isMatteChecked) ColorType.MATTE else ColorType.GLOSSY
             wishList.put(item, colorType)
@@ -48,7 +50,7 @@ class CustomerDetailViewModel(
         isChecked: Boolean,
         item: Color
     ) {
-        val wishList = getCustomerWishlist()
+        val wishList = customerRepository.getCustomerWishList(customerId)
         if (isChecked) {
             wishList.put(item, ColorType.MATTE)
 

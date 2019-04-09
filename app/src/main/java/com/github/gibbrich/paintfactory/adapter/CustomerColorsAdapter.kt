@@ -5,13 +5,13 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import com.github.gibbrich.paintfactory.R
-import com.github.gibbrich.paintfactory.domain.Color
-import com.github.gibbrich.paintfactory.domain.ColorType
+import com.github.gibbrich.paintfactory.domain.models.Color
+import com.github.gibbrich.paintfactory.domain.models.ColorType
 import kotlinx.android.synthetic.main.customer_color_item_layout.view.*
 
 class CustomerColorsAdapter(
-    items: MutableList<Color>,
-    private val customerWishlist: MutableMap<Color, ColorType>,
+    items: List<Color>,
+    private val customerWishlist: Map<Color, ColorType>,
     private val onAddToWishListCkeckboxClicked: (isChecked: Boolean, item: Color, isMatteChecked: Boolean) -> Unit,
     private val onIsMatteCheckboxClicked: (isChecked: Boolean, item: Color) -> Unit
 ): ConstantValueAdapter<Color, CustomerColorsAdapter.Holder>(items) {

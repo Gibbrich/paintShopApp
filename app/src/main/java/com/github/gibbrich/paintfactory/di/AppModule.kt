@@ -1,7 +1,9 @@
 package com.github.gibbrich.paintfactory.di
 
-import com.github.gibbrich.paintfactory.data.ColorsRepository
-import com.github.gibbrich.paintfactory.data.CustomerRepository
+import com.github.gibbrich.paintfactory.data.ColorsDataRepository
+import com.github.gibbrich.paintfactory.data.CustomerDataRepository
+import com.github.gibbrich.paintfactory.domain.repository.ColorsRepository
+import com.github.gibbrich.paintfactory.domain.repository.CustomerRespoitory
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -11,13 +13,13 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideCustomerRepository(): CustomerRepository {
-        return CustomerRepository()
+    fun provideCustomerRepository(): CustomerRespoitory {
+        return CustomerDataRepository()
     }
 
     @Singleton
     @Provides
     fun provideColorsRepository(): ColorsRepository {
-        return ColorsRepository()
+        return ColorsDataRepository()
     }
 }

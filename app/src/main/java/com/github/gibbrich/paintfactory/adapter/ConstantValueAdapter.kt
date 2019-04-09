@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 
 abstract class ConstantValueAdapter<T, VH : RecyclerView.ViewHolder>(
-    private val items: MutableList<T>
+    private val items: List<T>
 ) : RecyclerView.Adapter<VH>() {
 
     final override fun getItemCount() = items.size
@@ -24,20 +24,4 @@ abstract class ConstantValueAdapter<T, VH : RecyclerView.ViewHolder>(
     }
 
     abstract fun bind(holder: VH, item: T, position: Int)
-
-    fun add(item: T) {
-        items.add(item)
-        notifyItemInserted(items.lastIndex)
-    }
-
-    fun remove(itemId: Int) {
-        items.removeAt(itemId)
-        notifyItemRemoved(itemId)
-    }
-
-    fun replaceData(data: List<T>) {
-        items.clear()
-        items.addAll(data)
-        notifyDataSetChanged()
-    }
 }

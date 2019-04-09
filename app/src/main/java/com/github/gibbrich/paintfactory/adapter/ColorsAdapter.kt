@@ -3,14 +3,13 @@ package com.github.gibbrich.paintfactory.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
-import com.github.gibbrich.paintfactory.domain.Color
+import com.github.gibbrich.paintfactory.domain.models.Color
 import com.github.gibbrich.paintfactory.R
-import com.github.gibbrich.paintfactory.domain.ColorType
 import com.github.gibbrich.paintfactory.utils.colorToHex
 import kotlinx.android.synthetic.main.color_item_layout.view.*
 
 class ColorsAdapter(
-    colors: MutableList<Color> = mutableListOf()
+    colors: List<Color>
 ): ConstantValueAdapter<Color, ColorsAdapter.Holder>(colors) {
     override fun createHolder(view: View): Holder = Holder(
         colorPreview = view.color_preview_image,

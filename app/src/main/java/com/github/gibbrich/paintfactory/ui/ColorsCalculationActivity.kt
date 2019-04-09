@@ -1,26 +1,16 @@
 package com.github.gibbrich.paintfactory.ui
 
 import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.github.gibbrich.paintFactory.optimized.Case
-import com.github.gibbrich.paintFactory.optimized.Customer
-import com.github.gibbrich.paintFactory.optimized.process
-import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.adapter.ColorsWithTypeAdapter
-import com.github.gibbrich.paintfactory.data.ColorsRepository
-import com.github.gibbrich.paintfactory.data.CustomerRepository
-import com.github.gibbrich.paintfactory.domain.ColorType
-import com.github.gibbrich.paintfactory.domain.ColorWithType
 import com.github.gibbrich.paintfactory.ui.viewModels.ColorsCalculationViewModel
 import kotlinx.android.synthetic.main.activity_colors_calculation.*
-import javax.inject.Inject
 
 class ColorsCalculationActivity : AppCompatActivity() {
 

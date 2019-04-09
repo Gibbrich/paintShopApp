@@ -3,13 +3,13 @@ package com.github.gibbrich.paintfactory.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
-import com.github.gibbrich.paintfactory.domain.Customer
+import com.github.gibbrich.paintfactory.domain.models.Customer
 import com.github.gibbrich.paintfactory.R
 import kotlinx.android.synthetic.main.customer_item_layout.view.*
 
 class CustomersAdapter(
     private val onItemClicked: (Int) -> Unit,
-    items: MutableList<Customer>
+    items: List<Customer>
 ): ConstantValueAdapter<Customer, CustomersAdapter.Holder>(items) {
     override fun createHolder(view: View): Holder = Holder(
         customerTitleLabel = view.customer_item_title_label,

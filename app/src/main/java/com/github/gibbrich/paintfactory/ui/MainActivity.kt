@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
@@ -54,6 +55,10 @@ class MainActivity : AppCompatActivity() {
 
         is MainActivityViewModel.Action.ChangeColorList -> {
             changeColorList(action.colorId, action.type)
+        }
+
+        MainActivityViewModel.Action.ShowAddColorFailedWarning -> {
+            Toast.makeText(this, R.string.activity_main_color_in_list_already, Toast.LENGTH_LONG).show()
         }
     }
 

@@ -1,4 +1,4 @@
-package com.github.gibbrich.paintfactory.domain
+package com.github.gibbrich.paintfactory.domain.models
 
 data class ColorWithType(
     val value: Int,

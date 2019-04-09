@@ -2,14 +2,15 @@ package com.github.gibbrich.paintfactory.ui.viewModels
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import com.github.gibbrich.paintFactory.optimized.Batches
 import com.github.gibbrich.paintFactory.optimized.Case
 import com.github.gibbrich.paintFactory.optimized.Customer
 import com.github.gibbrich.paintFactory.optimized.process
 import com.github.gibbrich.paintfactory.PaintShopApp
-import com.github.gibbrich.paintfactory.data.ColorsRepository
-import com.github.gibbrich.paintfactory.data.CustomerRepository
-import com.github.gibbrich.paintfactory.domain.ColorType
-import com.github.gibbrich.paintfactory.domain.ColorWithType
+import com.github.gibbrich.paintfactory.domain.models.ColorType
+import com.github.gibbrich.paintfactory.domain.models.ColorWithType
+import com.github.gibbrich.paintfactory.domain.repository.ColorsRepository
+import com.github.gibbrich.paintfactory.domain.repository.CustomerRespoitory
 import javax.inject.Inject
 
 class ColorsCalculationViewModel(app: Application) : AndroidViewModel(app) {
@@ -18,32 +19,23 @@ class ColorsCalculationViewModel(app: Application) : AndroidViewModel(app) {
     internal lateinit var colorsRepository: ColorsRepository
 
     @Inject
-    internal lateinit var customersRepository: CustomerRepository
+    internal lateinit var customersRepository: CustomerRespoitory
 
     init {
         getApplication<PaintShopApp>().appComponent.inject(this)
     }
 
-    fun getColorsWithType(): MutableList<ColorWithType> {
-        val customers = customersRepository.customers.map {
-            var matteId: Int? = null
-            val glossyWishList = HashSet<Int>()
-            it.wishList.forEach { entry ->
-                val id = colorsRepository.colors.indexOf(entry.key)
-                if (entry.value == ColorType.MATTE) {
-                    matteId = id
-                } else {
-                    glossyWishList.add(id)
-                }
-            }
-            Customer(matteId, glossyWishList)
-        }
-
-        val case = Case(colorsRepository.colors.size, customers)
+    fun getColorsWithType(): List<ColorWithType> {
+        val customers = getLibCustomers()
+        val case = Case(colorsRepository.getColors().size, customers)
         val batches = process(case)
 
+        return getColorsWithType(batches)
+    }
+
+    private fun getColorsWithType(batches: Batches?): MutableList<ColorWithType> {
         return batches?.let {
-            colorsRepository.colors.mapIndexed { index, color ->
+            colorsRepository.getColors().mapIndexed { index, color ->
                 val colorType = if (it.get(index) == 0) {
                     ColorType.GLOSSY
                 } else {
@@ -54,4 +46,19 @@ class ColorsCalculationViewModel(app: Application) : AndroidViewModel(app) {
             }.toMutableList()
         } ?: mutableListOf()
     }
+
+    private fun getLibCustomers(): List<Customer> =
+        customersRepository.getCustomers().map {
+            var matteId: Int? = null
+            val glossyWishList = HashSet<Int>()
+            for (entry in it.wishList) {
+                val id = colorsRepository.getColorId(entry.key)
+                if (entry.value == ColorType.MATTE) {
+                    matteId = id
+                } else {
+                    glossyWishList.add(id)
+                }
+            }
+            Customer(matteId, glossyWishList)
+        }
 }

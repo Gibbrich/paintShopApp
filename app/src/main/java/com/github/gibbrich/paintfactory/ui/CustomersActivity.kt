@@ -1,7 +1,6 @@
 package com.github.gibbrich.paintfactory.ui
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
@@ -11,11 +10,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
-import com.github.gibbrich.paintfactory.domain.Customer
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.adapter.CustomersAdapter
 import com.github.gibbrich.paintfactory.adapter.SwipeToDeleteCallback
-import com.github.gibbrich.paintfactory.dto.CustomerDetailParams
 import com.github.gibbrich.paintfactory.ui.viewModels.CustomersActivityViewModel
 import com.github.gibbrich.paintfactory.utils.ListChangeType
 import kotlinx.android.synthetic.main.activity_customers.*
@@ -103,7 +100,7 @@ class CustomersActivity : AppCompatActivity() {
 
         val swipeToDeleteCallback = object : SwipeToDeleteCallback(this) {
             override fun onSwiped(holder: RecyclerView.ViewHolder, position: Int) {
-                adapter.remove(holder.adapterPosition)
+                model.onCustomerDeleted(holder.adapterPosition)
             }
         }
 

@@ -5,13 +5,13 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import com.github.gibbrich.paintfactory.R
-import com.github.gibbrich.paintfactory.domain.ColorType
-import com.github.gibbrich.paintfactory.domain.ColorWithType
+import com.github.gibbrich.paintfactory.domain.models.ColorType
+import com.github.gibbrich.paintfactory.domain.models.ColorWithType
 import com.github.gibbrich.paintfactory.utils.colorToHex
 import kotlinx.android.synthetic.main.color_with_types_item_layout.view.*
 
 class ColorsWithTypeAdapter(
-    colors: MutableList<ColorWithType>
+    colors: List<ColorWithType>
 ): ConstantValueAdapter<ColorWithType, ColorsWithTypeAdapter.Holder>(colors) {
     override fun createHolder(view: View): Holder = Holder(
         colorPreview = view.color_with_types_color_preview_image,
