@@ -4,6 +4,7 @@ import com.github.gibbrich.paintfactory.ui.ColorsCalculationActivity
 import com.github.gibbrich.paintfactory.ui.CustomerDetailActivity
 import com.github.gibbrich.paintfactory.ui.CustomersActivity
 import com.github.gibbrich.paintfactory.ui.MainActivity
+import com.github.gibbrich.paintfactory.ui.viewModels.ColorsCalculationViewModel
 import com.github.gibbrich.paintfactory.ui.viewModels.CustomerDetailViewModel
 import com.github.gibbrich.paintfactory.ui.viewModels.CustomersActivityViewModel
 import com.github.gibbrich.paintfactory.ui.viewModels.MainActivityViewModel
@@ -17,6 +18,6 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(entry: CustomersActivityViewModel)
     fun inject(entry: CustomerDetailViewModel)
-    fun inject(entry: ColorsCalculationActivity)
+    fun inject(entry: ColorsCalculationViewModel)
     fun inject(entry: MainActivityViewModel)
 }

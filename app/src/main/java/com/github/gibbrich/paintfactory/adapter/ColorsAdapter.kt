@@ -6,6 +6,7 @@ import android.widget.TextView
 import com.github.gibbrich.paintfactory.domain.Color
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.domain.ColorType
+import com.github.gibbrich.paintfactory.utils.colorToHex
 import kotlinx.android.synthetic.main.color_item_layout.view.*
 
 class ColorsAdapter(
@@ -21,7 +22,7 @@ class ColorsAdapter(
 
     override fun bind(holder: Holder, item: Color, position: Int) {
         holder.colorPreview.setBackgroundColor(item.value)
-        holder.titleLabel.text = "#${item.value.toString(16).capitalize()}"
+        holder.titleLabel.text = item.value.colorToHex()
     }
 
     class Holder(
