@@ -17,8 +17,6 @@ import javax.inject.Inject
 class CustomerDetailActivity : AppCompatActivity() {
 
     companion object {
-        const val CREATE_CUSTOMER_CODE = 42
-        const val CHANGE_CUSTOMER_DATA = 43
         private const val TAG = "CustomerDetailActivity"
         private const val EXTRA_PARAMS = "$TAG.EXTRA_PARAMS"
 

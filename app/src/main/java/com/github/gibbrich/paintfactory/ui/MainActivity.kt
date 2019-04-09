@@ -11,11 +11,11 @@ import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
-import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.adapter.ColorsAdapter
 import com.github.gibbrich.paintfactory.adapter.SwipeToDeleteCallback
 import com.github.gibbrich.paintfactory.ui.viewModels.MainActivityViewModel
+import com.github.gibbrich.paintfactory.utils.ListChangeType
 
 
 class MainActivity : AppCompatActivity() {
@@ -75,14 +75,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun changeColorList(
         colorId: Int,
-        type: MainActivityViewModel.ColorListChangeType
+        type: ListChangeType
     ) = when (type) {
-        MainActivityViewModel.ColorListChangeType.ADD -> {
+        ListChangeType.ADD -> {
             adapter.notifyItemInserted(colorId)
             changeColorsListVisibility()
         }
 
-        MainActivityViewModel.ColorListChangeType.REMOVE -> {
+        ListChangeType.REMOVE -> {
             adapter.notifyItemRemoved(colorId)
             changeColorsListVisibility()
         }

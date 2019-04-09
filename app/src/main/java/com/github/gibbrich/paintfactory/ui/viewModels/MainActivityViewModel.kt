@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.data.ColorsRepository
 import com.github.gibbrich.paintfactory.domain.Color
+import com.github.gibbrich.paintfactory.utils.ListChangeType
 import javax.inject.Inject
 
 class MainActivityViewModel(app: Application): AndroidViewModel(app) {
@@ -30,12 +31,12 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
     fun onColorPicked(selectedColor: Int) {
         val color = Color(selectedColor)
         colorsRepository.colors.add(color)
-        actions.value = Action.ChangeColorList(getColors().lastIndex, ColorListChangeType.ADD)
+        actions.value = Action.ChangeColorList(getColors().lastIndex, ListChangeType.ADD)
     }
 
     fun onColorRemoved(colorId: Int) {
         colorsRepository.colors.removeAt(colorId)
-        actions.value = Action.ChangeColorList(colorId, ColorListChangeType.REMOVE)
+        actions.value = Action.ChangeColorList(colorId, ListChangeType.REMOVE)
     }
 
     fun getColors() = colorsRepository.colors
@@ -43,10 +44,6 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
     sealed class Action {
         object SwitchToCustomersScreen: Action()
         object ShowColorPicker: Action()
-        data class ChangeColorList(val colorId: Int, val type: ColorListChangeType): Action()
-    }
-
-    enum class ColorListChangeType {
-        ADD, REMOVE
+        data class ChangeColorList(val colorId: Int, val type: ListChangeType): Action()
     }
 }
