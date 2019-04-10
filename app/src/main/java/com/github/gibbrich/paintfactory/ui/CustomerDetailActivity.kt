@@ -18,7 +18,7 @@ class CustomerDetailActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "CustomerDetailActivity"
-        private const val EXTRA_PARAMS = "$TAG.EXTRA_PARAMS"
+        const val EXTRA_PARAMS = "$TAG.EXTRA_PARAMS"
 
         fun getIntent(context: Context, params: CustomerDetailParams) =
             Intent(context, CustomerDetailActivity::class.java).apply {
