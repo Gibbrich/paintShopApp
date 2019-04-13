@@ -11,6 +11,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
 import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.R
+import com.github.gibbrich.paintfactory.TestPaintShopApp
 import com.github.gibbrich.paintfactory.adapter.CustomerColorsAdapter
 import com.github.gibbrich.paintfactory.di.AppComponentMock
 import com.github.gibbrich.paintfactory.domain.models.Color
@@ -36,8 +37,15 @@ class CustomerDetailActivityTest {
     @Inject
     lateinit var colorsRepository: ColorsRepository
 
-    val intent = Intent().apply {
+    private val intent = Intent().apply {
         putExtra(CustomerDetailActivity.EXTRA_PARAMS, CustomerDetailParams(0))
+    }
+
+    private val app by lazy {
+        InstrumentationRegistry
+            .getInstrumentation()
+            .targetContext
+            .applicationContext as TestPaintShopApp
     }
 
     @get:Rule
@@ -49,12 +57,9 @@ class CustomerDetailActivityTest {
 
     @Before
     fun setUp() {
-        val app = InstrumentationRegistry
-            .getInstrumentation()
-            .targetContext
-            .applicationContext as PaintShopApp
-
-        (app.appComponent as AppComponentMock).inject(this)
+        val component = app.createComponent() as AppComponentMock
+        app.appComponent = component
+        component.inject(this)
     }
 
     @Test

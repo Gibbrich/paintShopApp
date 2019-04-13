@@ -5,7 +5,7 @@ import com.github.gibbrich.paintfactory.di.DaggerAppComponentMock
 
 class TestPaintShopApp: PaintShopApp() {
 
-    override fun createComponent(): AppComponent {
+    public override fun createComponent(): AppComponent {
         return DaggerAppComponentMock.builder().build()
     }
 }

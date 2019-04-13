@@ -18,6 +18,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.R
+import com.github.gibbrich.paintfactory.TestPaintShopApp
 import com.github.gibbrich.paintfactory.adapter.ColorsAdapter
 import com.github.gibbrich.paintfactory.di.AppComponentMock
 import com.github.gibbrich.paintfactory.domain.models.Color
@@ -41,6 +42,13 @@ class MainActivityTest {
     @Inject
     internal lateinit var customerRespoitory: CustomerRespoitory
 
+    private val app by lazy {
+        InstrumentationRegistry
+            .getInstrumentation()
+            .targetContext
+            .applicationContext as TestPaintShopApp
+    }
+
     @get:Rule
     val rule = ActivityTestRule(
         MainActivity::class.java,
@@ -57,16 +65,13 @@ class MainActivityTest {
 
     @Before
     fun setUp() {
-        val app = InstrumentationRegistry
-            .getInstrumentation()
-            .targetContext
-            .applicationContext as PaintShopApp
-
-        (app.appComponent as AppComponentMock).inject(this)
+        val component = app.createComponent() as AppComponentMock
+        app.appComponent = component
+        component.inject(this)
     }
 
     @Test
-    fun mainActivity_launch_with_empty_label() {
+    fun colors_screen_launch_with_empty_label() {
         rule.launchActivity(Intent())
 
         onView(withId(R.id.activity_main_empty_label)).check(matches(isDisplayed()))

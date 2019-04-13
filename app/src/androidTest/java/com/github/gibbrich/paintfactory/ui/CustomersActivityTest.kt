@@ -14,8 +14,10 @@ import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
+import android.util.Log
 import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.R
+import com.github.gibbrich.paintfactory.TestPaintShopApp
 import com.github.gibbrich.paintfactory.adapter.CustomersAdapter
 import com.github.gibbrich.paintfactory.di.AppComponentMock
 import com.github.gibbrich.paintfactory.domain.models.Customer
@@ -23,10 +25,12 @@ import com.github.gibbrich.paintfactory.domain.repository.CustomerRespoitory
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import org.hamcrest.Matchers.not
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito
 import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
@@ -34,6 +38,13 @@ class CustomersActivityTest {
 
     @Inject
     internal lateinit var customerRepository: CustomerRespoitory
+
+    private val app by lazy {
+        InstrumentationRegistry
+            .getInstrumentation()
+            .targetContext
+            .applicationContext as TestPaintShopApp
+    }
 
     @get:Rule
     val rule = ActivityTestRule(
@@ -51,16 +62,13 @@ class CustomersActivityTest {
 
     @Before
     fun setUp() {
-        val app = InstrumentationRegistry
-            .getInstrumentation()
-            .targetContext
-            .applicationContext as PaintShopApp
-
-        (app.appComponent as AppComponentMock).inject(this)
+        val component = app.createComponent() as AppComponentMock
+        app.appComponent = component
+        component.inject(this)
     }
 
     @Test
-    fun mainActivity_launch_with_empty_label() {
+    fun customers_screen_launch_with_empty_label() {
         rule.launchActivity(Intent())
 
         onView(withId(R.id.activity_customers_empty_label)).check(matches(isDisplayed()))
