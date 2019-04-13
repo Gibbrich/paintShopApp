@@ -1,56 +1,37 @@
 package com.github.gibbrich.paintfactory.ui.viewModels
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import com.github.gibbrich.paintfactory.PaintShopApp
-import com.github.gibbrich.paintfactory.data.ColorsDataRepository
-import com.github.gibbrich.paintfactory.domain.models.Color
-import com.github.gibbrich.paintfactory.domain.repository.ColorsRepository
-import com.github.gibbrich.paintfactory.utils.ListChangeType
+import android.arch.lifecycle.ViewModel
+import com.github.gibbrich.paintfactory.di.Injector
+import com.github.gibbrich.paintfactory.domain.usecase.ColorsUseCase
 import javax.inject.Inject
 
-class MainActivityViewModel(app: Application): AndroidViewModel(app) {
+class MainActivityViewModel : ViewModel() {
 
-    val actions = MutableLiveData<Action>()
+    val actions = MutableLiveData<ColorsUseCase.Action>()
 
     @Inject
-    lateinit var colorsRepository: ColorsRepository
+    lateinit var colorsUseCase: ColorsUseCase
 
     init {
-        getApplication<PaintShopApp>().appComponent.inject(this)
+        Injector.componentManager.colorsComponent.inject(this)
     }
 
     fun onChooseColorButtonClicked() {
-        actions.value = Action.ShowColorPicker
+        actions.value = colorsUseCase.pickColor()
     }
 
     fun onSetupCustomersButtonClicked() {
-        actions.value = Action.SwitchToCustomersScreen
+        actions.value = colorsUseCase.setupCustomers()
     }
 
     fun onColorPicked(selectedColor: Int) {
-        val color = Color(selectedColor)
-        val colorId = colorsRepository.addColor(color)
-
-        colorId?.let {
-            actions.value = Action.ChangeColorList(it, ListChangeType.ADD)
-        } ?: kotlin.run {
-            actions.value = Action.ShowAddColorFailedWarning
-        }
+        actions.value = colorsUseCase.addColor(selectedColor)
     }
 
     fun onColorRemoved(colorId: Int) {
-        colorsRepository.removeColor(colorId)
-        actions.value = Action.ChangeColorList(colorId, ListChangeType.REMOVE)
+        actions.value = colorsUseCase.removeColor(colorId)
     }
 
-    fun getColors() = colorsRepository.getColors()
-
-    sealed class Action {
-        object SwitchToCustomersScreen: Action()
-        object ShowColorPicker: Action()
-        object ShowAddColorFailedWarning: Action()
-        data class ChangeColorList(val colorId: Int, val type: ListChangeType): Action()
-    }
+    fun getColors() = colorsUseCase.getColors()
 }

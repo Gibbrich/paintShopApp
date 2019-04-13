@@ -1,59 +1,38 @@
 package com.github.gibbrich.paintfactory.ui.viewModels
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import com.github.gibbrich.paintfactory.PaintShopApp
-import com.github.gibbrich.paintfactory.data.CustomerDataRepository
-import com.github.gibbrich.paintfactory.domain.models.Customer
-import com.github.gibbrich.paintfactory.domain.repository.CustomerRespoitory
-import com.github.gibbrich.paintfactory.dto.CustomerDetailParams
-import com.github.gibbrich.paintfactory.utils.ListChangeType
+import android.arch.lifecycle.ViewModel
+import com.github.gibbrich.paintfactory.di.Injector
+import com.github.gibbrich.paintfactory.domain.usecase.CustomersUseCase
+import com.github.gibbrich.paintfactory.domain.usecase.CustomersUseCase.Action
 import javax.inject.Inject
 
-class CustomersActivityViewModel(app: Application) : AndroidViewModel(app) {
+class CustomersActivityViewModel : ViewModel() {
 
     @Inject
-    internal lateinit var customerRepository: CustomerRespoitory
+    internal lateinit var customersUseCase: CustomersUseCase
+
     val actions = MutableLiveData<Action>()
 
     init {
-        getApplication<PaintShopApp>().appComponent.inject(this)
+        Injector.componentManager.customersComponent.inject(this)
     }
 
     fun onAddCustomerButtonClicked() {
-        val customer = Customer()
-        val customerId = customerRepository.addCustomer(customer)
-
-        actions.value = Action.ChangeCustomerList(customerId, ListChangeType.ADD)
-
-        setSwitchToCustomerDetailScreenAction(customerId)
+        customersUseCase.addCustomer().forEach(actions::setValue)
     }
 
     fun onPickColorsButtonClicked() {
-        actions.value = Action.SwitchToColorCalculationScreen
+        actions.value = customersUseCase.pickColors()
     }
 
-    fun onCustomerClicked(customerId: Int) = setSwitchToCustomerDetailScreenAction(customerId)
-
-    fun getCustomers() = customerRepository.getCustomers()
+    fun onCustomerClicked(customerId: Int) {
+        actions.value = customersUseCase.configureCustomerWishlist(customerId)
+    }
 
     fun onCustomerDeleted(customerId: Int) {
-        customerRepository.deleteCustomer(customerId)
-        actions.value = Action.ChangeCustomerList(customerId, ListChangeType.REMOVE)
+        actions.value = customersUseCase.deleteCustomer(customerId)
     }
 
-    private fun setSwitchToCustomerDetailScreenAction(customerId: Int) {
-        val params = CustomerDetailParams(customerId)
-        actions.value = Action.SwitchToCustomerDetailScreen(params)
-    }
-
-    sealed class Action {
-        data class SwitchToCustomerDetailScreen(val params: CustomerDetailParams) : Action()
-        object SwitchToColorCalculationScreen : Action()
-        data class ChangeCustomerList(
-            val customerId: Int,
-            val changeType: ListChangeType
-        ) : Action()
-    }
+    fun getCustomers() = customersUseCase.getCustomers()
 }

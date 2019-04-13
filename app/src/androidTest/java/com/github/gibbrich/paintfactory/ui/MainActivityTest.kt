@@ -7,23 +7,21 @@ import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.swipeLeft
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.contrib.RecyclerViewActions
-import android.support.test.espresso.intent.Intents
 import android.support.test.espresso.intent.Intents.intended
 import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import android.support.test.espresso.intent.matcher.IntentMatchers.toPackage
 import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.RootMatchers.isDialog
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.TestPaintShopApp
 import com.github.gibbrich.paintfactory.adapter.ColorsAdapter
 import com.github.gibbrich.paintfactory.di.AppComponentMock
+import com.github.gibbrich.paintfactory.di.Injector
 import com.github.gibbrich.paintfactory.domain.models.Color
 import com.github.gibbrich.paintfactory.domain.repository.ColorsRepository
-import com.github.gibbrich.paintfactory.domain.repository.CustomerRespoitory
+import com.github.gibbrich.paintfactory.domain.repository.CustomerRespository
 import com.nhaarman.mockitokotlin2.whenever
 import org.hamcrest.Matchers.not
 import org.junit.Before
@@ -40,7 +38,7 @@ class MainActivityTest {
     internal lateinit var colorsRepository: ColorsRepository
 
     @Inject
-    internal lateinit var customerRespoitory: CustomerRespoitory
+    internal lateinit var customerRespoitory: CustomerRespository
 
     private val app by lazy {
         InstrumentationRegistry
@@ -66,7 +64,7 @@ class MainActivityTest {
     @Before
     fun setUp() {
         val component = app.createComponent() as AppComponentMock
-        app.appComponent = component
+        Injector.init(component)
         component.inject(this)
     }
 

@@ -14,30 +14,27 @@ import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import android.util.Log
-import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.TestPaintShopApp
 import com.github.gibbrich.paintfactory.adapter.CustomersAdapter
 import com.github.gibbrich.paintfactory.di.AppComponentMock
+import com.github.gibbrich.paintfactory.di.Injector
 import com.github.gibbrich.paintfactory.domain.models.Customer
-import com.github.gibbrich.paintfactory.domain.repository.CustomerRespoitory
+import com.github.gibbrich.paintfactory.domain.repository.CustomerRespository
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import org.hamcrest.Matchers.not
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 class CustomersActivityTest {
 
     @Inject
-    internal lateinit var customerRepository: CustomerRespoitory
+    internal lateinit var customerRepository: CustomerRespository
 
     private val app by lazy {
         InstrumentationRegistry
@@ -63,7 +60,7 @@ class CustomersActivityTest {
     @Before
     fun setUp() {
         val component = app.createComponent() as AppComponentMock
-        app.appComponent = component
+        Injector.init(component)
         component.inject(this)
     }
 

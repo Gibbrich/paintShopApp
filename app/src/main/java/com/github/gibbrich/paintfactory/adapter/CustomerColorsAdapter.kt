@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.domain.models.Color
 import com.github.gibbrich.paintfactory.domain.models.ColorType
+import com.github.gibbrich.paintfactory.utils.colorToHex
 import kotlinx.android.synthetic.main.customer_color_item_layout.view.*
 
 class CustomerColorsAdapter(
@@ -35,7 +36,7 @@ class CustomerColorsAdapter(
         }
 
         holder.colorPreview.setBackgroundColor(item.value)
-        holder.titleLabel.text = "#${item.value.toString(16).capitalize()}"
+        holder.titleLabel.text = item.value.colorToHex()
         holder.matteCheckBox.isChecked = customerWishlist.get(item)?.let { it == ColorType.MATTE } ?: false
         holder.matteCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {

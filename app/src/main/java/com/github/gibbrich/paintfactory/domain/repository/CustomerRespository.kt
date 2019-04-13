@@ -4,7 +4,7 @@ import com.github.gibbrich.paintfactory.domain.models.Color
 import com.github.gibbrich.paintfactory.domain.models.ColorType
 import com.github.gibbrich.paintfactory.domain.models.Customer
 
-interface CustomerRespoitory {
+interface CustomerRespository {
     fun addCustomer(customer: Customer): Int
     fun getCustomers(): List<Customer>
     fun getCustomerWishList(customerId: Int): MutableMap<Color, ColorType>

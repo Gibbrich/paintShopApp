@@ -8,16 +8,16 @@ import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
-import com.github.gibbrich.paintfactory.PaintShopApp
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.TestPaintShopApp
 import com.github.gibbrich.paintfactory.adapter.ColorsWithTypeAdapter
 import com.github.gibbrich.paintfactory.di.AppComponentMock
+import com.github.gibbrich.paintfactory.di.Injector
 import com.github.gibbrich.paintfactory.domain.models.Color
 import com.github.gibbrich.paintfactory.domain.models.ColorType
 import com.github.gibbrich.paintfactory.domain.models.Customer
 import com.github.gibbrich.paintfactory.domain.repository.ColorsRepository
-import com.github.gibbrich.paintfactory.domain.repository.CustomerRespoitory
+import com.github.gibbrich.paintfactory.domain.repository.CustomerRespository
 import com.github.gibbrich.paintfactory.utils.withRecyclerView
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertTrue
@@ -31,7 +31,7 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 class ColorsCalculationActivityTest {
     @Inject
-    lateinit var customerRepository: CustomerRespoitory
+    lateinit var customerRepository: CustomerRespository
 
     @Inject
     lateinit var colorsRepository: ColorsRepository
@@ -53,7 +53,7 @@ class ColorsCalculationActivityTest {
     @Before
     fun setUp() {
         val component = app.createComponent() as AppComponentMock
-        app.appComponent = component
+        Injector.init(component)
         component.inject(this)
     }
 

@@ -1,5 +1,6 @@
 package com.github.gibbrich.paintfactory.di
 
+import com.github.gibbrich.paintfactory.di.components.AppComponent
 import com.github.gibbrich.paintfactory.ui.ColorsCalculationActivityTest
 import com.github.gibbrich.paintfactory.ui.CustomerDetailActivityTest
 import com.github.gibbrich.paintfactory.ui.CustomersActivityTest

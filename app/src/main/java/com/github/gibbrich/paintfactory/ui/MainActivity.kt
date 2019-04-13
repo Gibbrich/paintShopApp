@@ -1,7 +1,7 @@
 package com.github.gibbrich.paintfactory.ui
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -15,6 +15,7 @@ import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.adapter.ColorsAdapter
 import com.github.gibbrich.paintfactory.adapter.SwipeToDeleteCallback
+import com.github.gibbrich.paintfactory.domain.usecase.ColorsUseCase.Action
 import com.github.gibbrich.paintfactory.ui.viewModels.MainActivityViewModel
 import com.github.gibbrich.paintfactory.utils.ListChangeType
 
@@ -27,9 +28,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        model = ViewModelProvider
-            .AndroidViewModelFactory(application)
-            .create(MainActivityViewModel::class.java)
+        model = ViewModelProviders
+            .of(this)
+            .get(MainActivityViewModel::class.java)
 
         activity_main_choose_color_button.setOnClickListener {
             model.onChooseColorButtonClicked()
@@ -46,20 +47,20 @@ class MainActivity : AppCompatActivity() {
         setUpColorsRecyclerView()
     }
 
-    private fun handleAction(action: MainActivityViewModel.Action) = when (action) {
-        MainActivityViewModel.Action.SwitchToCustomersScreen -> {
+    private fun handleAction(action: Action) = when (action) {
+        Action.SwitchToCustomersScreen -> {
             switchToCustomersScreen()
         }
 
-        MainActivityViewModel.Action.ShowColorPicker -> {
+        Action.ShowColorPicker -> {
             showColorPicker()
         }
 
-        is MainActivityViewModel.Action.ChangeColorList -> {
+        is Action.ChangeColorList -> {
             changeColorList(action.colorId, action.type)
         }
 
-        MainActivityViewModel.Action.ShowAddColorFailedWarning -> {
+        Action.ShowAddColorFailedWarning -> {
             Toast.makeText(this, R.string.activity_main_color_in_list_already, Toast.LENGTH_LONG).show()
         }
     }

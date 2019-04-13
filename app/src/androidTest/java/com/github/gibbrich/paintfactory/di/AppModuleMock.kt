@@ -1,7 +1,7 @@
 package com.github.gibbrich.paintfactory.di
 
 import com.github.gibbrich.paintfactory.domain.repository.ColorsRepository
-import com.github.gibbrich.paintfactory.domain.repository.CustomerRespoitory
+import com.github.gibbrich.paintfactory.domain.repository.CustomerRespository
 import dagger.Module
 import dagger.Provides
 import org.mockito.Mockito
@@ -18,7 +18,7 @@ class AppModuleMock {
 
     @Singleton
     @Provides
-    fun provideCustomerRepository(): CustomerRespoitory {
-        return Mockito.mock(CustomerRespoitory::class.java)
+    fun provideCustomerRepository(): CustomerRespository {
+        return Mockito.mock(CustomerRespository::class.java)
     }
 }

@@ -1,6 +1,5 @@
 package com.github.gibbrich.paintfactory.ui
 
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -36,7 +35,7 @@ class CustomerDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_detail)
 
-        model = ViewModelProviders.of(this, CustomerDetailModelFactory(application, params.customerId))
+        model = ViewModelProviders.of(this, CustomerDetailModelFactory(params.customerId))
             .get(CustomerDetailViewModel::class.java)
 
         setupColorsList()

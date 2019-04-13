@@ -1,10 +1,10 @@
 package com.github.gibbrich.paintfactory.ui
 
-import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.github.gibbrich.paintfactory.R
@@ -25,9 +25,9 @@ class ColorsCalculationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_colors_calculation)
 
-        model = ViewModelProvider
-            .AndroidViewModelFactory(application)
-            .create(ColorsCalculationViewModel::class.java)
+        model = ViewModelProviders
+            .of(this)
+            .get(ColorsCalculationViewModel::class.java)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

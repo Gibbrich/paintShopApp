@@ -2,6 +2,7 @@ package com.github.gibbrich.paintfactory.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -13,6 +14,7 @@ import android.view.View
 import com.github.gibbrich.paintfactory.R
 import com.github.gibbrich.paintfactory.adapter.CustomersAdapter
 import com.github.gibbrich.paintfactory.adapter.SwipeToDeleteCallback
+import com.github.gibbrich.paintfactory.domain.usecase.CustomersUseCase.Action
 import com.github.gibbrich.paintfactory.ui.viewModels.CustomersActivityViewModel
 import com.github.gibbrich.paintfactory.utils.ListChangeType
 import kotlinx.android.synthetic.main.activity_customers.*
@@ -30,9 +32,9 @@ class CustomersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customers)
 
-        model = ViewModelProvider
-            .AndroidViewModelFactory(application)
-            .create(CustomersActivityViewModel::class.java)
+        model = ViewModelProviders
+            .of(this)
+            .get(CustomersActivityViewModel::class.java)
 
         model.actions.observe(this, Observer { it?.let(this::handleAction) })
 
@@ -54,16 +56,16 @@ class CustomersActivity : AppCompatActivity() {
         return true
     }
 
-    private fun handleAction(action: CustomersActivityViewModel.Action) = when (action) {
-        is CustomersActivityViewModel.Action.SwitchToCustomerDetailScreen -> {
+    private fun handleAction(action: Action) = when (action) {
+        is Action.SwitchToCustomerDetailScreen -> {
             startActivity(CustomerDetailActivity.getIntent(this, action.params))
         }
 
-        CustomersActivityViewModel.Action.SwitchToColorCalculationScreen -> {
+        Action.SwitchToColorCalculationScreen -> {
             startActivity(ColorsCalculationActivity.getIntent(this))
         }
 
-        is CustomersActivityViewModel.Action.ChangeCustomerList -> {
+        is Action.ChangeCustomerList -> {
             changeCustomerList(action.customerId, action.changeType)
         }
     }
