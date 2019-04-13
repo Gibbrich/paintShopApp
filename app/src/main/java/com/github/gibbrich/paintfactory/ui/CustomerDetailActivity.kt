@@ -46,8 +46,7 @@ class CustomerDetailActivity : AppCompatActivity() {
         adapter = CustomerColorsAdapter(
             model.getColors(),
             model.getCustomerWishlist(),
-            model::onAddToWishListCkeckboxClicked,
-            model::onIsMatteCheckboxClicked
+            model::onUpdateColorInfo
         )
         activity_customer_detail_colors.layoutManager = LinearLayoutManager(this)
         activity_customer_detail_colors.adapter = adapter

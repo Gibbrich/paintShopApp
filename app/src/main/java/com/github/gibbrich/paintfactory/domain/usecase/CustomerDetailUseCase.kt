@@ -9,37 +9,24 @@ class CustomerDetailUseCase(
     val customerRepository: CustomerRespository,
     val colorsRepository: ColorsRepository
 ) {
-    fun changeMatteColors(
+    fun updateWishlist(
         customerId: Int,
-        isChecked: Boolean,
-        item: Color
+        isInWishlist: Boolean,
+        color: Color,
+        isMatte: Boolean
     ) {
         val wishList = customerRepository.getCustomerWishList(customerId)
-        if (isChecked) {
-            wishList.put(item, ColorType.MATTE)
+        if (isInWishlist) {
+            val colorType = if (isMatte) ColorType.MATTE else ColorType.GLOSSY
+            wishList.put(color, colorType)
 
-            for (customerColor in wishList) {
-                if (customerColor.key != item) {
-                    wishList[customerColor.key] = ColorType.GLOSSY
+            if (colorType == ColorType.MATTE) {
+                for (customerColor in wishList) {
+                    if (customerColor.key != color) {
+                        wishList[customerColor.key] = ColorType.GLOSSY
+                    }
                 }
             }
-        } else {
-            if (item in wishList) {
-                wishList.put(item, ColorType.GLOSSY)
-            }
-        }
-    }
-
-    fun addColorToWishlist(
-        customerId: Int,
-        isChecked: Boolean,
-        color: Color,
-        isMatteChecked: Boolean
-    ) {
-        val wishList = customerRepository.getCustomerWishList(customerId)
-        if (isChecked) {
-            val colorType = if (isMatteChecked) ColorType.MATTE else ColorType.GLOSSY
-            wishList.put(color, colorType)
         } else {
             wishList.remove(color)
         }

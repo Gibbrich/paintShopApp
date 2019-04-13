@@ -13,8 +13,7 @@ import kotlinx.android.synthetic.main.customer_color_item_layout.view.*
 class CustomerColorsAdapter(
     items: List<Color>,
     private val customerWishlist: Map<Color, ColorType>,
-    private val onAddToWishListCkeckboxClicked: (isChecked: Boolean, item: Color, isMatteChecked: Boolean) -> Unit,
-    private val onIsMatteCheckboxClicked: (isChecked: Boolean, item: Color) -> Unit
+    private val onUpdateColorInfo: (isMatte: Boolean, isInWishList: Boolean, item: Color) -> Unit
 ): ConstantValueAdapter<Color, CustomerColorsAdapter.Holder>(items) {
     override fun createHolder(view: View): Holder = Holder(
         wishlistCheckBox = view.is_in_wishlist_check_box,
@@ -32,7 +31,7 @@ class CustomerColorsAdapter(
             if (isChecked.not()) {
                 holder.matteCheckBox.isChecked = false
             }
-            onAddToWishListCkeckboxClicked.invoke(isChecked, item, holder.matteCheckBox.isChecked)
+            onUpdateColorInfo.invoke(holder.matteCheckBox.isChecked, isChecked, item)
         }
 
         holder.colorPreview.setBackgroundColor(item.value)
@@ -41,10 +40,10 @@ class CustomerColorsAdapter(
         holder.matteCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 holder.wishlistCheckBox.isChecked = true
-                onIsMatteCheckboxClicked.invoke(isChecked, item)
+                onUpdateColorInfo.invoke(isChecked, true, item)
                 notifyDataSetChanged()
             } else {
-                onIsMatteCheckboxClicked.invoke(isChecked, item)
+                onUpdateColorInfo.invoke(isChecked, holder.wishlistCheckBox.isChecked, item)
             }
         }
     }

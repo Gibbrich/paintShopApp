@@ -23,16 +23,11 @@ class CustomerDetailViewModel(
 
     fun getColors() = customerDetailUseCase.getColors()
 
-    fun onAddToWishListCkeckboxClicked(
-        isChecked: Boolean,
-        item: Color,
-        isMatteChecked: Boolean
-    ) = customerDetailUseCase.addColorToWishlist(customerId, isChecked, item, isMatteChecked)
-
-    fun onIsMatteCheckboxClicked(
-        isChecked: Boolean,
+    fun onUpdateColorInfo(
+        isMatte: Boolean,
+        isInWishlist: Boolean,
         item: Color
-    ) = customerDetailUseCase.changeMatteColors(customerId, isChecked, item)
+    ) = customerDetailUseCase.updateWishlist(customerId, isInWishlist, item, isMatte)
 }
 
 @Suppress("UNCHECKED_CAST")
