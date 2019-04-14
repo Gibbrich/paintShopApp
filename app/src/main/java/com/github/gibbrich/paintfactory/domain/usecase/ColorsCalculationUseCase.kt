@@ -1,22 +1,22 @@
 package com.github.gibbrich.paintfactory.domain.usecase
 
-import com.github.gibbrich.paintFactory.optimized.Batches
-import com.github.gibbrich.paintFactory.optimized.Case
-import com.github.gibbrich.paintFactory.optimized.Customer
-import com.github.gibbrich.paintFactory.optimized.process
 import com.github.gibbrich.paintfactory.domain.models.ColorType
 import com.github.gibbrich.paintfactory.domain.models.ColorWithType
 import com.github.gibbrich.paintfactory.domain.repository.ColorsRepository
 import com.github.gibbrich.paintfactory.domain.repository.CustomerRespository
+import optimized.businessLogic.OptimizedSolver
+import optimized.models.Batches
+import optimized.models.OptimizedCase
+import optimized.models.OptimizedCustomer
 
 class ColorsCalculationUseCase(
     private val colorsRepository: ColorsRepository,
     private val customersRepository: CustomerRespository
 ) {
     fun getColorsWithType(): List<ColorWithType> {
-        val customers = getLibCustomers()
-        val case = Case(colorsRepository.getColors().size, customers)
-        val batches = process(case)
+        val customers = getOptimizedCustomers()
+        val case = OptimizedCase(colorsRepository.getColors().size, customers)
+        val batches = OptimizedSolver.process(case)
 
         return getColorsWithType(batches)
     }
@@ -24,7 +24,7 @@ class ColorsCalculationUseCase(
     private fun getColorsWithType(batches: Batches?): MutableList<ColorWithType> {
         return batches?.let {
             colorsRepository.getColors().mapIndexed { index, color ->
-                val colorType = if (it.get(index) == 0) {
+                val colorType = if (it.getColorType(index) == optimized.models.ColorType.GLOSSY) {
                     ColorType.GLOSSY
                 } else {
                     ColorType.MATTE
@@ -35,7 +35,7 @@ class ColorsCalculationUseCase(
         } ?: mutableListOf()
     }
 
-    private fun getLibCustomers(): List<Customer> =
+    private fun getOptimizedCustomers(): List<OptimizedCustomer> =
         customersRepository.getCustomers().map {
             var matteId: Int? = null
             val glossyWishList = HashSet<Int>()
@@ -47,6 +47,6 @@ class ColorsCalculationUseCase(
                     glossyWishList.add(id)
                 }
             }
-            Customer(matteId, glossyWishList)
+            OptimizedCustomer(matteId, glossyWishList)
         }
 }
