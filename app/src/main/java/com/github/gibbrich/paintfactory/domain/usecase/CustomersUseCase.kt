@@ -7,6 +7,10 @@ import com.github.gibbrich.paintfactory.utils.ListChangeType
 
 class CustomersUseCase(private val customerRepository: CustomerRespository) {
 
+    /**
+     * Add new [Customer] to the list.
+     * @return list of actions, which should be applied to UI ([Action.ChangeCustomerList] and [Action.SwitchToCustomerDetailScreen])
+     */
     fun addCustomer(): List<Action> {
         val customer = Customer()
         val customerId = customerRepository.addCustomer(customer)
@@ -26,6 +30,9 @@ class CustomersUseCase(private val customerRepository: CustomerRespository) {
         return Action.SwitchToCustomerDetailScreen(params)
     }
 
+    /**
+     * Delete customer from the list.
+     */
     fun deleteCustomer(customerId: Int): Action.ChangeCustomerList {
         customerRepository.deleteCustomer(customerId)
         return Action.ChangeCustomerList(customerId, ListChangeType.REMOVE)

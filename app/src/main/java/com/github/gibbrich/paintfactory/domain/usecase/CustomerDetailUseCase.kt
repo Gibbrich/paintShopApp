@@ -2,6 +2,7 @@ package com.github.gibbrich.paintfactory.domain.usecase
 
 import com.github.gibbrich.paintfactory.domain.models.Color
 import com.github.gibbrich.paintfactory.domain.models.ColorType
+import com.github.gibbrich.paintfactory.domain.models.Customer
 import com.github.gibbrich.paintfactory.domain.repository.ColorsRepository
 import com.github.gibbrich.paintfactory.domain.repository.CustomerRespository
 
@@ -9,6 +10,15 @@ class CustomerDetailUseCase(
     val customerRepository: CustomerRespository,
     val colorsRepository: ColorsRepository
 ) {
+    /**
+     * Add/delete [color] to/from [Customer.wishlist], depending on [isInWishlist] flag.
+     *
+     * @param customerId [Customer] position in list, which [Customer.wishList] will be modified
+     * @param isInWishlist add [color] to [Customer.wishList] if true; remove otherwise
+     * @param color [Color] which will be added to [Customer.wishList]
+     * @param isMatte type of [color], which will be added to [Customer.wishList].
+     * [ColorType.MATTE] if true, [ColorType.GLOSSY] otherwise
+     */
     fun updateWishlist(
         customerId: Int,
         isInWishlist: Boolean,

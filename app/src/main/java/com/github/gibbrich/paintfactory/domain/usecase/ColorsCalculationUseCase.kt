@@ -13,6 +13,15 @@ class ColorsCalculationUseCase(
     private val colorsRepository: ColorsRepository,
     private val customersRepository: CustomerRespository
 ) {
+
+    /**
+     * Converts selected colors and customers wishlists to list of
+     * colors with types by applying algorithm of selecting colors from
+     * paintShopLib.
+     *
+     * @return colors with types in the same order, as colors were added;
+     * if there is no solution - empty list.
+     */
     fun getColorsWithType(): List<ColorWithType> {
         val customers = getOptimizedCustomers()
         val case = OptimizedCase(colorsRepository.getColors().size, customers)

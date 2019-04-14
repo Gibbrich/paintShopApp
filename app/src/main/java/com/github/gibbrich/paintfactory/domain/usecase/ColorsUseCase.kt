@@ -11,6 +11,12 @@ class ColorsUseCase(
 
     fun setupCustomers() = ColorsUseCase.Action.SwitchToCustomersScreen
 
+    /**
+     * Add color to the list if there is no such color already.
+     *
+     * @return [ColorsUseCase.Action.ShowAddColorFailedWarning] if there is such color in list already;
+     * [ColorsUseCase.Action.ChangeColorList] otherwise.
+     */
     fun addColor(selectedColor: Int): ColorsUseCase.Action {
         val color = Color(selectedColor)
         val colorId = colorsRepository.addColor(color)
@@ -22,6 +28,11 @@ class ColorsUseCase(
         }
     }
 
+    /**
+     * Remove color from list.
+     *
+     * @param colorId - position of color in the list
+     */
     fun removeColor(colorId: Int): Action.ChangeColorList {
         colorsRepository.removeColor(colorId)
         return ColorsUseCase.Action.ChangeColorList(colorId, ListChangeType.REMOVE)
