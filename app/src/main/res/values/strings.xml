@@ -15,7 +15,8 @@
     <string name="activity_customers_add_customer">Add customer</string>
     <string name="activity_customers_pick_colors">Pick colors</string>
 
-    <string name="activity_customer_detail_label">Customer colors</string>
+    <string name="activity_customer_detail_label">Customer wishlist</string>
+    <string name="activity_customer_wishlist_done">Done</string>
 
     <string name="activity_colors_calculation_label">Colors result</string>
     <string name="activity_colors_calculation_cant_satisfy_customers">There is no way to satisfy all customers with given conditions.\nPlease, change them and try again.</string>

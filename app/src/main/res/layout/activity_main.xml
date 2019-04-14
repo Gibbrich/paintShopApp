@@ -54,7 +54,7 @@
                 fab:fab_size="mini"
                 fab:fab_colorNormal="@color/white"
                 fab:fab_title="@string/activity_main_setup_customers"
-                fab:fab_icon="@android:drawable/ic_input_add"
+                fab:fab_icon="@drawable/ic_customers"
                 fab:fab_colorPressed="@color/white_pressed"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 fab:fab_colorNormal="@color/white"
                 fab:fab_size="mini"
-                fab:fab_icon="@android:drawable/ic_input_add"
+                fab:fab_icon="@drawable/ic_paint"
                 fab:fab_title="@string/activity_main_add_color"
                 fab:fab_colorPressed="@color/white_pressed"/>
 

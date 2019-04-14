@@ -12,6 +12,9 @@ import com.github.gibbrich.paintfactory.dto.CustomerDetailParams
 import com.github.gibbrich.paintfactory.ui.viewModels.CustomerDetailModelFactory
 import com.github.gibbrich.paintfactory.ui.viewModels.CustomerDetailViewModel
 import kotlinx.android.synthetic.main.activity_customer_detail.*
+import android.view.Menu
+import android.view.MenuItem
+
 
 class CustomerDetailActivity : AppCompatActivity() {
 
@@ -40,6 +43,20 @@ class CustomerDetailActivity : AppCompatActivity() {
 
         setupColorsList()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.customer_wishlist_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.customer_wishlist_done -> {
+            finish()
+            true
+        }
+
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun setupColorsList() {

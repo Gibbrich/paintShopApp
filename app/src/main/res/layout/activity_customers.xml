@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 fab:fab_colorNormal="@color/white"
                 fab:fab_size="mini"
-                fab:fab_icon="@android:drawable/ic_input_add"
+                fab:fab_icon="@drawable/ic_palette"
                 fab:fab_title="@string/activity_customers_pick_colors"
                 fab:fab_colorPressed="@color/white_pressed"/>
 
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 fab:fab_size="mini"
                 fab:fab_colorNormal="@color/white"
-                fab:fab_icon="@android:drawable/ic_input_add"
+                fab:fab_icon="@drawable/ic_customer"
                 fab:fab_colorPressed="@color/white_pressed"
                 app:fab_title="@string/activity_customers_add_customer"/>
 
